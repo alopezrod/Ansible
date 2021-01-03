@@ -1,0 +1,24 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent { label 'Ansible-Master' }
+    // triggers {
+    //     cron('0 7 * * *')
+    // }
+    environment {
+        VAULT_ADDR = 'https://vault.prod.use1.crypto.aws.efx'
+        VAULT_TOKEN = credentials('vault_token')
+        VAULT_NAMESPACE = 'gfs-devops'
+    }
+    stages {
+        stage('Run App scanner') {
+            steps {
+                script {
+                    sh "cd Monitoring/brmlogs/playbook/; chmod +x * && sh gfs_status_checker.sh"
+                                            
+                }         
+            }
+        }
+    }
+}
+

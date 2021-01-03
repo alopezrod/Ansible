@@ -1,0 +1,11 @@
+---
+- name: Let's copy our executable script to remote location, execute script and get result back.
+  become: yes
+  become_user: root
+  hosts: all
+  tasks:
+     - name: Transfer executable script script
+       copy: src=shell-script.sh dest=/home/export
+
+     - name: Execute the script
+       command: sh /home/export/shell-script.sh
